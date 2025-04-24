@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct SubTopicsView: View {
+    @State private var showHome = false
     @Environment(\.modelContext) private var modelContext
   private var topics: [TopicModel] = [.finance]
     @State private var currentTopicIndex = 0
@@ -37,12 +38,14 @@ struct SubTopicsView: View {
 
                 Spacer()
 
-                Button(action: {
-                    if currentTopicIndex < topics.count - 1 {
-                        currentTopicIndex += 1
-                    }
-                    // Optionally handle completion
-                }) {
+                NavigationLink(destination: HomeView(), isActive: $showHome) {
+                    Button(action: {
+                        if currentTopicIndex < topics.count - 1 {
+                            currentTopicIndex += 1
+                        } else {
+                            showHome = true
+                        }
+                    }) {
                     Text(currentTopicIndex < topics.count - 1 ? "Next" : "Start Learning")
                         .font(.stableBody())
                         .foregroundColor(.stablePrimary)
@@ -51,6 +54,7 @@ struct SubTopicsView: View {
                         .background(.white)
                         .cornerRadius(12)
                         .padding(.horizontal)
+                    }
                 }
                 .padding(.bottom, 40)
             }
