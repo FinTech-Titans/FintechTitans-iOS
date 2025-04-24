@@ -11,7 +11,7 @@ import SwiftUI
 struct StableApp: App {
     var body: some Scene {
         WindowGroup {
-            OnboardingView()
+            HomeView()
         }
     }
 }
