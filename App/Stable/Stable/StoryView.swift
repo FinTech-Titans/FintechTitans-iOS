@@ -12,6 +12,18 @@ struct StorySubTopicItem: Identifiable {
     let id = UUID()
     let title: String
     let items: [StoryItem]
+
+    static var investingSubTopic = StorySubTopicItem(
+        title: "What is investing",
+        items: [
+            StoryItem(title: "Investing Grows Wealth", content: "By putting money into assets like stocks, you can potentially grow your wealth over time.", image: "chart.bar.fill"),
+            StoryItem(title: "Risk and Reward", content: "All investments carry some risk, but greater risks often come with the potential for higher returns.", image: "exclamationmark.triangle.fill"),
+            StoryItem(title: "Time Matters", content: "The earlier you start investing, the more you benefit from compound growth.", image: "clock.fill"),
+            StoryItem(title: "Diversification Reduces Risk", content: "Spreading investments across different assets helps protect your portfolio.", image: "square.grid.2x2.fill"),
+            StoryItem(title: "Different Investment Types", content: "Common options include stocks, bonds, mutual funds, ETFs, and real estate.", image: "list.bullet.rectangle.fill")
+        ]
+    )
+
 }
 
 // MARK: - ViewModel
