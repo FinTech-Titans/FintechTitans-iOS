@@ -158,11 +158,7 @@ struct HomeView: View {
     
     private func understandingCardView(card: ContentCard) -> some View {
         Button(action: {
-            // Example: Create a sample StorySubTopicItem to demonstrate navigation
-            // In a real app, this would come from your data source
-            let exampleItem = StoryItem(title: "Example Item", content: "This is sample content", image: "star.fill")
-            let sampleSubTopicItem = StorySubTopicItem(title: card.title, items: [exampleItem])
-            viewModel.presentStoryView(with: sampleSubTopicItem)
+            viewModel.presentStoryView(with: StorySubTopicItem.investingSubTopic)
         }) {
             VStack(spacing: 0) {
                 // Card Content
