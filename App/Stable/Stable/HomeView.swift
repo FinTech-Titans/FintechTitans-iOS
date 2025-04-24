@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - ViewModel
 class HomeViewModel: ObservableObject {
-    @Published var userName: String = "Michael"
+    @Published var userName: String = "Charlotte"
     @Published var sleepHours: Int = 80
     @Published var activityHours: Int = 12
     @Published var contentCards: [ContentCard] = []
@@ -45,7 +45,7 @@ struct HomeView: View {
     
     var body: some View {
         ZStack {
-            Color(white: 0.95, opacity: 1.0)
+            Color.stablePrimary
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -75,35 +75,37 @@ struct HomeView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Hi, \(viewModel.userName) 👋")
                     .font(.system(size: 24, weight: .bold))
+              Text("Your learning topics for today")
+                .font(.system(size: 20, weight: .bold))
+                .foregroundStyle(Color.stableTextSecondary)
             }
             .padding(.leading)
             
             Spacer()
             
             // Use a system image as fallback since the profilePic may not exist
-            Image(systemName: "person.circle.fill")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 40, height: 40)
-                .foregroundColor(.gray)
-                .clipShape(Circle())
-                .padding(.trailing)
+//            Image(systemName: "person.circle.fill")
+//                .resizable()
+//                .aspectRatio(contentMode: .fill)
+//                .frame(width: 40, height: 40)
+//                .foregroundColor(.gray)
+//                .clipShape(Circle())
+//                .padding(.trailing)
         }
         .padding(.top, 16)
         .padding(.bottom, 8)
-        .background(Color.white)
     }
     
     // MARK: - Stats Cards
     private var statsCardsView: some View {
         HStack(spacing: 16) {
-            statsCard(
-                title: "Sleep",
-                value: "\(viewModel.sleepHours)",
-                unit: "hours",
-                icon: "moon.fill",
-                color: Color.blue
-            )
+//            statsCard(
+//                title: "Sleep",
+//                value: "\(viewModel.sleepHours)",
+//                unit: "hours",
+//                icon: "moon.fill",
+//                color: Color.blue
+//            )
             
             statsCard(
                 title: "Streak",
