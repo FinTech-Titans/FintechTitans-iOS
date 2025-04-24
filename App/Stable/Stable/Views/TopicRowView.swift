@@ -9,11 +9,11 @@ struct TopicRowView: View {
             ZStack(alignment: .leading) {
                 // Background
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.stableTopicBackground)
+                .fill(Color.white)
                 
                 // Progress overlay
                 RoundedRectangle(cornerRadius: 12)
-                .fill(.white)
+                .fill(Color.stableTopicBackground)
                     .frame(width: geometry.size.width * topic.expertise)
                 
                 HStack {
