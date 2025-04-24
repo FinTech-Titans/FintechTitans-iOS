@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    @State private var showSubTopics = false
     @State private var topics = [
         Topic(name: "Finance", expertise: 0),
         Topic(name: "Career", expertise: 0),
@@ -8,7 +9,8 @@ struct OnboardingView: View {
     ]
     
     var body: some View {
-        ZStack {
+        NavigationStack {
+            ZStack {
             Color.stablePrimary
                 .ignoresSafeArea()
             
@@ -43,13 +45,16 @@ struct OnboardingView: View {
                 
                 Spacer()
                 
-                Button(action: {}) {
-                    Text("Start Learning")
+                NavigationLink(destination: SubTopicsView(), isActive: $showSubTopics) {
+                    Button(action: { showSubTopics = true }) {
+                    Text("Select Sub-Topics")
                         .font(.stableBody())
                         .foregroundColor(.stablePrimary)
                         .frame(maxWidth: .infinity)
                         .frame(height: 56)
                         .background(.white)
+                    }
+                }
                         .cornerRadius(12)
                         .padding(.horizontal)
                 }
@@ -58,6 +63,7 @@ struct OnboardingView: View {
         }
     }
 }
+
 
 #Preview {
     OnboardingView()
