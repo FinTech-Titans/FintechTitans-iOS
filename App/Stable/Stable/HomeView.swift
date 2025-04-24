@@ -66,6 +66,7 @@ struct HomeView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden()
     }
     
     // MARK: - Header View
