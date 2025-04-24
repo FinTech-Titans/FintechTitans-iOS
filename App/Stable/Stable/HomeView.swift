@@ -1,20 +1,13 @@
 import SwiftUI
 
-struct ContentCard: Identifiable {
-    let id = UUID()
-    let icon: String
-    let title: String
-    let subtitle: String = ""
-    let rating: Int // Rating out of 10
-    let backgroundColor: Color = Color(white: 0.95)
-}
-
 // MARK: - ViewModel
 class HomeViewModel: ObservableObject {
     @Published var userName: String = "Michael"
     @Published var sleepHours: Int = 80
     @Published var activityHours: Int = 12
     @Published var contentCards: [ContentCard] = []
+    @Published var showingStoryView: Bool = false
+    @Published var selectedSubTopicItem: StorySubTopicItem?
     
     init() {
         setupContentCards()
@@ -39,6 +32,11 @@ class HomeViewModel: ObservableObject {
             )
         ]
     }
+    
+    func presentStoryView(with subTopicItem: StorySubTopicItem) {
+        selectedSubTopicItem = subTopicItem
+        showingStoryView = true
+    }
 }
 
 // MARK: - View
@@ -60,6 +58,11 @@ struct HomeView: View {
                     }
                     .padding(.horizontal)
                     .padding(.bottom, 20)
+                }
+            }
+            .sheet(isPresented: $viewModel.showingStoryView) {
+                if let subTopicItem = viewModel.selectedSubTopicItem {
+                    StoryView(subTopic: subTopicItem)
                 }
             }
         }
@@ -153,54 +156,68 @@ struct HomeView: View {
     }
     
     private func understandingCardView(card: ContentCard) -> some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 16) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color(white: 0.9))
-                        .frame(width: 50, height: 50)
-                    
-                    Text(card.icon)
-                        .font(.system(size: 24))
-                }
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(card.title)
-                        .font(.system(size: 16, weight: .medium))
-                    
-                    HStack(spacing: 4) {
-                        Text("Your rating:")
-                            .font(.system(size: 12))
-                            .foregroundColor(.gray)
+        Button(action: {
+            // Example: Create a sample StorySubTopicItem to demonstrate navigation
+            // In a real app, this would come from your data source
+            let exampleItem = StoryItem(title: "Example Item", content: "This is sample content", image: "star.fill")
+            let sampleSubTopicItem = StorySubTopicItem(title: card.title, items: [exampleItem])
+            viewModel.presentStoryView(with: sampleSubTopicItem)
+        }) {
+            VStack(spacing: 0) {
+                // Card Content
+                HStack(spacing: 16) {
+                    // Icon
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color(white: 0.9))
+                            .frame(width: 50, height: 50)
                         
-                        Text("\(card.rating)/10")
-                            .font(.system(size: 12, weight: .semibold))
+                        Text(card.icon)
+                            .font(.system(size: 24))
+                    }
+                    
+                    // Title and Rating
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(card.title)
+                            .font(.system(size: 16, weight: .medium))
+                        
+                        HStack(spacing: 4) {
+                            Text("Your rating:")
+                                .font(.system(size: 12))
+                                .foregroundColor(.gray)
+                            
+                            Text("\(card.rating)/10")
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundColor(ratingColor(for: card.rating))
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.gray)
+                }
+                .padding()
+                
+                // Rating Bar
+                ZStack(alignment: .leading) {
+                    // Background track
+                    Rectangle()
+                        .frame(height: 4)
+                        .foregroundColor(Color(white: 0.9))
+                    
+                    // Filled portion
+                    GeometryReader { geometry in
+                        Rectangle()
+                            .frame(width: geometry.size.width * CGFloat(card.rating) / 10.0, height: 4)
                             .foregroundColor(ratingColor(for: card.rating))
                     }
                 }
-                
-                Spacer()
-                
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.gray)
             }
-            .padding()
-            
-            // Rating bar
-            ZStack(alignment: .leading) {
-                // Background track
-                Rectangle()
-                    .frame(height: 4)
-                    .foregroundColor(Color(white: 0.9))
-                
-                // Filled portion
-                Rectangle()
-                    .frame(width: CGFloat(card.rating) / 10.0 * (UIScreen.main.bounds.width - 48), height: 4)
-                    .foregroundColor(ratingColor(for: card.rating))
-            }
+            .background(Color.white)
+            .cornerRadius(12)
         }
-        .background(Color.white)
-        .cornerRadius(12)
+        .buttonStyle(PlainButtonStyle())
     }
     
     // Helper function to determine color based on rating
@@ -214,15 +231,6 @@ struct HomeView: View {
             return .blue
         default:
             return .green
-        }
-    }
-    
-    private func tabButton(icon: String, isSelected: Bool = false) -> some View {
-        Button(action: {}) {
-            Image(systemName: icon)
-                .font(.system(size: 22))
-                .foregroundColor(isSelected ? .black : .gray)
-                .frame(maxWidth: .infinity)
         }
     }
 }
