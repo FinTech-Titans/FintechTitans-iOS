@@ -4,7 +4,7 @@ import SwiftUI
 struct StableApp: App {
     var body: some Scene {
         WindowGroup {
-          SubTopicsView()
+          OnboardingView()
         }
     }
 }
