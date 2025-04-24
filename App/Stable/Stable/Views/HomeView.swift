@@ -11,8 +11,18 @@ class HomeViewModel: ObservableObject {
   
   init() {
     setupContentCards()
+      get()
   }
-  
+
+    private func get() {
+
+        let client = NetworkingClient.init(urlSession: .shared)
+        Task {
+            try? await client.getProfile()
+        }
+
+    }
+
   private func setupContentCards() {
     contentCards = [
       ContentCard(
