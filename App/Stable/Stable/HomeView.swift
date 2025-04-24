@@ -48,7 +48,7 @@ struct HomeView: View {
             Color.stablePrimary
                 .ignoresSafeArea()
             
-            VStack(spacing: 0) {
+            VStack(spacing: 8) {
                 headerView
                 
                 ScrollView {
@@ -72,10 +72,11 @@ struct HomeView: View {
     // MARK: - Header View
     private var headerView: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text("Hi, \(viewModel.userName) 👋")
                     .font(.system(size: 24, weight: .bold))
-              Text("Your learning topics for today")
+                    .foregroundStyle(.white)
+              Text("Your health metrics seem in check from last night. It looks like you're ready to tackle more. See the topics below 👇.")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundStyle(Color.stableTextSecondary)
             }
@@ -148,6 +149,7 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("My current topics")
                 .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(Color.stableTextSecondary)
             
             VStack(alignment: .leading, spacing: 12) {
                 ForEach(viewModel.contentCards) { card in
@@ -170,14 +172,8 @@ struct HomeView: View {
                 // Card Content
                 HStack(spacing: 16) {
                     // Icon
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color(white: 0.9))
-                            .frame(width: 50, height: 50)
-                        
-                        Text(card.icon)
-                            .font(.system(size: 24))
-                    }
+                  Text(card.icon)
+                      .font(.system(size: 24))
                     
                     // Title and Rating
                     VStack(alignment: .leading, spacing: 4) {
@@ -185,11 +181,7 @@ struct HomeView: View {
                             .font(.system(size: 16, weight: .medium))
                         
                         HStack(spacing: 4) {
-                            Text("Your rating:")
-                                .font(.system(size: 12))
-                                .foregroundColor(.gray)
-                            
-                            Text("\(card.rating)/10")
+                          Text("\(card.rating)")
                                 .font(.system(size: 12, weight: .semibold))
                                 .foregroundColor(ratingColor(for: card.rating))
                         }
@@ -201,7 +193,7 @@ struct HomeView: View {
                         .foregroundColor(.gray)
                 }
                 .padding()
-                
+                Spacer()
                 // Rating Bar
                 ZStack(alignment: .leading) {
                     // Background track
