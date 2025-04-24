@@ -55,6 +55,7 @@ class HomeViewModel: ObservableObject {
 // MARK: - View
 struct HomeView: View {
   @StateObject private var viewModel = HomeViewModel()
+  @State private var showProfileView = false
   
   var body: some View {
     ZStack {
@@ -77,8 +78,26 @@ struct HomeView: View {
           StoryView(subTopic: subTopicItem)
         }
       }
+      .sheet(isPresented: $showProfileView) {
+        NavigationView {
+          ProfileView()
+        }
+      }
     }
     .navigationBarBackButtonHidden()
+    .toolbar {
+      ToolbarItem(placement: .navigationBarTrailing) {
+        Button {
+          showProfileView = true
+        } label: {
+          Image(systemName: "person.circle.fill")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 28, height: 28)
+            .foregroundColor(.white)
+        }
+      }
+    }
   }
   
   // MARK: - Header View

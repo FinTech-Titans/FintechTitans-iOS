@@ -32,6 +32,13 @@ final class NetworkingClient {
             throw URLError(.badServerResponse)
         }
 
-        return try JSONDecoder().decode(Profile.self, from: data)
+        if let raw = String(data: data, encoding: .utf8) {
+            print("📦 Raw response string:\n\(raw)")
+        }
+
+        print("RAW JSON:", String(data: data, encoding: .utf8) ?? "N/A")
+        let profile = try JSONDecoder().decode(Profile.self, from: data)
+
+        return profile
     }
 }
