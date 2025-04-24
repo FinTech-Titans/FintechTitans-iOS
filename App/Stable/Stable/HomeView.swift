@@ -181,7 +181,7 @@ struct HomeView: View {
                             .font(.system(size: 16, weight: .medium))
                         
                         HStack(spacing: 4) {
-                          Text("\(card.rating)")
+                          Text("\(card.rating * 10)%")
                                 .font(.system(size: 12, weight: .semibold))
                                 .foregroundColor(ratingColor(for: card.rating))
                         }
